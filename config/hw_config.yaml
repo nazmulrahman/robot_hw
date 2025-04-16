@@ -1,0 +1,52 @@
+encoder_publisher:
+  ros__parameters:
+    serial_device: "/dev/arduino_encoders"
+    baud_rate: 57600
+    timeout_ms: 1000
+
+
+odom_publisher_node:
+  ros__parameters:
+    wheel_radius: 0.065
+    wheel_separation: 0.36
+    wheel_radius_multiplier: 1.0
+    wheel_separation_multiplier: 1.0
+    ticks_per_revolution: 160
+    odom_topic: "odom"
+    frame_id: "odom"
+    child_frame_id: "base_footprint"
+    publish_tf: true
+    print_odom: false
+
+
+motor_controller_pid:
+  ros__parameters:
+    serial_device: "/dev/arduino_motors"
+    baud_rate: 57600
+    timeout_ms: 1000
+    wheel_radius: 0.065
+    wheel_separation: 0.36
+    Kp: 1.0
+    Ki: 0.0
+    Kd: 0.0
+    ticks_per_revolution: 160
+
+
+imu_publisher_node:
+  ros__parameters:
+    serial_device: "/dev/arduino_imu"
+    baud_rate: 115200
+    timeout_ms: 1000
+    imu_topic: "imu/data_raw"
+    frame_id: "imu"
+    publish_tf: true
+
+
+motor_controller_openloop:
+  ros__parameters:
+    serial_device: "/dev/arduino_motors"
+    baud_rate: 57600
+    timeout_ms: 1000
+    wheel_radius: 0.065
+    wheel_separation: 0.36
+
