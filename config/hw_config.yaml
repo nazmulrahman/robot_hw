@@ -11,7 +11,7 @@ odom_publisher_node:
     wheel_separation: 0.36
     wheel_radius_multiplier: 1.0
     wheel_separation_multiplier: 1.0
-    ticks_per_revolution: 160
+    ticks_per_revolution: 240
     odom_topic: "odom"
     frame_id: "odom"
     child_frame_id: "base_footprint"
@@ -29,7 +29,7 @@ motor_controller_pid:
     Kp: 1.0
     Ki: 0.0
     Kd: 0.0
-    ticks_per_revolution: 160
+    ticks_per_revolution: 240
 
 
 imu_publisher_node:
