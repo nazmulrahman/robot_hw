@@ -26,9 +26,9 @@ motor_controller_pid:
     timeout_ms: 1000
     wheel_radius: 0.065
     wheel_separation: 0.36
-    Kp: 1.0
-    Ki: 0.0
-    Kd: 0.0
+    Kp: 0.8
+    Ki: 2.0
+    Kd: 0.05
     ticks_per_revolution: 240
 
 

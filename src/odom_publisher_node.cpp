@@ -21,7 +21,7 @@ class OdometryPublisher : public rclcpp::Node
         this->declare_parameter<double>("wheel_separation_multiplier", 1.0); // ticks
         this->declare_parameter<double>("wheel_radius", 0.065);  // meters
         this->declare_parameter<double>("wheel_separation", 0.36); // meters
-        this->declare_parameter<int>("ticks_per_revolution", 160); // ticks
+        this->declare_parameter<int>("ticks_per_revolution", 240); // ticks
 
         this->declare_parameter<std::string>("odom_topic", "odom");
         this->declare_parameter<std::string>("frame_id", "odom");

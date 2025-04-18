@@ -4,6 +4,29 @@
 
 using std::placeholders::_1;
 
+class EMAFilter {
+public:
+    EMAFilter(double alpha = 0.2) : alpha_(alpha), initialized_(false), prev_(0.0) {}
+
+    double filter(double value) {
+        if (!initialized_) {
+            prev_ = value;
+            initialized_ = true;
+        } else {
+            prev_ = alpha_ * value + (1.0 - alpha_) * prev_;
+        }
+        return prev_;
+    }
+
+private:
+    double alpha_;
+    double prev_;
+    bool initialized_;
+};
+
+
+
+
 class RpmTest : public rclcpp::Node {
 public:
     RpmTest()
@@ -34,8 +57,13 @@ private:
         double actual_left_rpm = (d_left_ticks / dt) * 60.0 / encoder_ticks_per_rev_;
         double actual_right_rpm = (d_right_ticks / dt) * 60.0 / encoder_ticks_per_rev_;
 
+        double filtered_left_rpm = left_rpm_filter_.filter(actual_left_rpm);
+        double filtered_right_rpm = right_rpm_filter_.filter(actual_right_rpm);
+
         RCLCPP_INFO(this->get_logger(), "left_rpm: : %f", actual_left_rpm);
         RCLCPP_INFO(this->get_logger(), "right_rpm: : %f", actual_right_rpm);
+        RCLCPP_INFO(this->get_logger(), "Filtered left_rpm: %f", filtered_left_rpm);
+        RCLCPP_INFO(this->get_logger(), "Filtered right_rpm: %f", filtered_right_rpm);
 
         RCLCPP_INFO(this->get_logger(), "----------------------------------------------------");
 
@@ -43,13 +71,16 @@ private:
 
     
     double ms_to_rpm_;
-    double encoder_ticks_per_rev_ = 160.0;
+    double encoder_ticks_per_rev_ = 240.0;
     double wheel_radius_ = 0.065;
     
     double prev_left_ticks = 0.0, prev_right_ticks = 0.0;
     
     rclcpp::Time prev_time_;
     rclcpp::Subscription<geometry_msgs::msg::Vector3>::SharedPtr ticks_sub_;
+
+    EMAFilter left_rpm_filter_;
+    EMAFilter right_rpm_filter_;
 };
 
 int main(int argc, char **argv) {
